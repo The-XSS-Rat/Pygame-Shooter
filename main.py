@@ -41,6 +41,24 @@ level = [
 "W                    W                     W",
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 ]
+
+#Create a random level
+level = [
+"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+]
+
+for i in range(6):
+    strLevelAdd = "W"
+    for j in range(21):
+        if random.randint(0,100) > 20:
+            strLevelAdd = strLevelAdd + "  "
+        else:
+            strLevelAdd = strLevelAdd + "WW"
+    print(strLevelAdd)
+    level.append(strLevelAdd)
+    level.append(strLevelAdd)
+    level.append(strLevelAdd)
+    level.append(strLevelAdd)
  
 # Initialize Pygame
 pygame.init()
@@ -167,6 +185,6 @@ while not done:
     pygame.display.flip()
  
     # --- Limit to 20 frames per second
-    clock.tick(60)
+    clock.tick(180)
  
 pygame.quit()
