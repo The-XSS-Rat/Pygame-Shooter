@@ -47,18 +47,20 @@ level = [
 "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 ]
 
-for i in range(6):
+for i in range(12):
     strLevelAdd = "W"
     for j in range(21):
         if random.randint(0,100) > 20:
             strLevelAdd = strLevelAdd + "  "
         else:
             strLevelAdd = strLevelAdd + "WW"
-    print(strLevelAdd)
-    level.append(strLevelAdd)
-    level.append(strLevelAdd)
-    level.append(strLevelAdd)
-    level.append(strLevelAdd)
+        strLevelAdd = strLevelAdd[:]
+        print(strLevelAdd)
+    level.append(strLevelAdd + "WW")
+    level.append(strLevelAdd + "WW")
+del level[-1]
+level.append("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW")
+
  
 # Initialize Pygame
 pygame.init()
@@ -130,10 +132,42 @@ while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
- 
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                bullet = clBullet.Bullet("left")
+                # Set the bullet so it is where the player is
+                bullet.rect.x = player.rect.x
+                bullet.rect.y = player.rect.y
+                # Add the bullet to the lists
+                all_sprites_list.add(bullet)
+                bullet_list.add(bullet)
+            if event.key == pygame.K_RIGHT:
+                bullet = clBullet.Bullet("right")
+                # Set the bullet so it is where the player is
+                bullet.rect.x = player.rect.x
+                bullet.rect.y = player.rect.y
+                # Add the bullet to the lists
+                all_sprites_list.add(bullet)
+                bullet_list.add(bullet)
+            if event.key == pygame.K_UP:
+                bullet = clBullet.Bullet("up")
+                # Set the bullet so it is where the player is
+                bullet.rect.x = player.rect.x
+                bullet.rect.y = player.rect.y
+                # Add the bullet to the lists
+                all_sprites_list.add(bullet)
+                bullet_list.add(bullet)
+            if event.key == pygame.K_DOWN:
+                bullet = clBullet.Bullet("down")
+                # Set the bullet so it is where the player is
+                bullet.rect.x = player.rect.x
+                bullet.rect.y = player.rect.y
+                # Add the bullet to the lists
+                all_sprites_list.add(bullet)
+                bullet_list.add(bullet)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             # Fire a bullet if the user clicks the mouse button
-            bullet = clBullet.Bullet()
+            bullet = clBullet.Bullet("up")
             # Set the bullet so it is where the player is
             bullet.rect.x = player.rect.x
             bullet.rect.y = player.rect.y
@@ -180,6 +214,14 @@ while not done:
 
     # Draw all the spites
     all_sprites_list.draw(screen)
+    
+    #Check for collisions of player with enemy
+    collisions = pygame.sprite.spritecollide(player,block_list,False)     #argument one is the sprite, argument two is the group to test collisions with the sprite for, and the final argument should almost always be False, because when it is True, colliding sprites will automatically get deleted.
+    for block in collisions:                                              #Spritecollide returns a list of colliding sprites. This will iterate through them.
+        if block != player:                                             #spritecollide will also always return that the sprite is colliding with itself. this will filter that out, because you don't want this information.
+            print("collision detected, insert code to run on collision here or return True from a function")
+            block_list.remove(block)
+            all_sprites_list.remove(block)
  
     # Go ahead and update the screen with what we've drawn.
     pygame.display.flip()

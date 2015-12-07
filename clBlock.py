@@ -13,7 +13,7 @@ class Block(pygame.sprite.Sprite):
     """ This class represents the block. """
     def __init__(self, color):
         self.set_target((10, 10))
-        self.speed = 0.7
+        self.speed = 0.2
         # Call the parent class (Sprite) constructor
         super().__init__()
  
